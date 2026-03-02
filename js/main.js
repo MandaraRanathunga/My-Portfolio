@@ -9,7 +9,7 @@ function updateThemeConfig(isDark) {
     if (isDark) {
         themeConfig.particleColor = 'rgba(100, 200, 255, OPACITY)';
         themeConfig.lineColor = 'rgba(100, 200, 255, OPACITY_FACTOR)';
-        themeConfig.canvasClearColor = 'rgba(10, 10, 30, 0.1)';
+        themeConfig.canvasClearColor = 'rgba(10, 10, 30, 0.3)';
     } else {
         themeConfig.particleColor = 'rgba(44, 62, 80, OPACITY)'; // Darker particles for light mode
         themeConfig.lineColor = 'rgba(44, 62, 80, OPACITY_FACTOR)';
@@ -37,10 +37,10 @@ function initBackground() {
             this.y = Math.random() * canvas.height;
             this.size = Math.random() * 2 + 1;
             // Adjust speed for a calmer feel in light mode
-            const speedFactor = document.body.classList.contains('dark-mode') ? 0.5 : 0.3;
+            const speedFactor = document.body.classList.contains('dark-mode') ? 0.2 : 0.15;
             this.speedX = Math.random() * speedFactor - (speedFactor / 2);
             this.speedY = Math.random() * speedFactor - (speedFactor / 2);
-            this.opacity = Math.random() * 0.5 + 0.2;
+            this.opacity = Math.random() * 0.3 + 0.05;
         }
 
         update() {
@@ -61,7 +61,7 @@ function initBackground() {
         }
     }
 
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
         particles.push(new Particle());
     }
 
@@ -73,7 +73,7 @@ function initBackground() {
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < 100) {
-                    ctx.strokeStyle = themeConfig.lineColor.replace('OPACITY_FACTOR', 0.2 * (1 - distance / 100));
+                    ctx.strokeStyle = themeConfig.lineColor.replace('OPACITY_FACTOR', 0.05 * (1 - distance / 100));
                     ctx.lineWidth = 0.5;
                     ctx.beginPath();
                     ctx.moveTo(p1.x, p1.y);
@@ -102,7 +102,7 @@ function initBackground() {
     // Return a function to re-initialize particles on theme change
     return function reinitParticles() {
         particles = [];
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 50; i++) {
             particles.push(new Particle());
         }
     };
