@@ -1,11 +1,36 @@
 // Skills Data
 const skillsData = [
-    { name: 'React', level: 90, color: '#61dafb' },
-    { name: 'JavaScript', level: 85, color: '#61dafb' },
-    { name: 'CSS/Tailwind', level: 88, color: '#61dafb' },
-    { name: 'Node.js', level: 80, color: '#61dafb' },
-    { name: 'Python', level: 75, color: '#61dafb' },
-    { name: 'Git', level: 82, color: '#61dafb'}
+    {
+        title: 'Software Skills',
+        skills: [
+            { name: 'HTML', level: 90 },
+            { name: 'JavaScript', level: 85 },
+            { name: 'CSS/Tailwind', level: 88 },
+            { name: 'C++', level: 80 },
+            { name: 'Python', level: 75 },
+            { name: 'Git/GitHub', level: 82 },
+            { name: 'VS Code', level: 85 },
+            { name: 'UI/UX Design', level: 90 }
+        ]
+    },
+    {
+        title: 'Project Management Skills',
+        skills: [
+            { name: 'Project Management', level: 90 },
+            { name: 'Jira', level: 85 },
+            { name: 'Azure', level: 80 },
+            { name: 'Leadership', level: 90 },
+            { name: 'Teamwork', level: 95 },
+            { name: 'Problem Solving', level: 90 }
+        ]
+    },
+    {
+        title: 'Language Skills',
+        skills: [
+            { name: 'English', level: 100 },
+            { name: 'Sinhala', level: 100 }
+        ]
+    }
 ];
 
 // Projects Data
@@ -30,22 +55,16 @@ const projectsData = [
 // Experience Data
 const experiencesData = [
     {
-        role: 'Senior Frontend Developer',
-        company: 'Tech Corp',
-        period: '2022 - Present',
-        description: 'Leading frontend development for enterprise applications'
+        role: 'Intern BA|PM',
+        company: 'Citipark (Sydney) Pvt Ltd',
+        period: 'February 2026 - Present',
+        description: 'Contributing to business analysis and project management workflows.'
     },
     {
-        role: 'Full Stack Developer',
-        company: 'StartUp Inc',
-        period: '2020 - 2022',
-        description: 'Built scalable web applications from scratch'
-    },
-    {
-        role: 'Junior Developer',
-        company: 'Dev Studio',
-        period: '2019 - 2020',
-        description: 'Developed responsive websites and web applications'
+        role: 'Ticketing and Marketing Manager',
+        company: 'DADS Entertainment Pvt Ltd',
+        period: '2023 - Present',
+        description: 'Overseeing event ticketing operations and marketing strategies.'
     }
 ];
 
@@ -93,38 +112,81 @@ const educationData = [
     }
 ];
 
+// Certifications Data
+const certificationsData = [
+    {
+        title: 'Project Management Professional (PMP)',
+        issuer: 'Project Management Institute',
+        date: '2025',
+        description: 'Demonstrates ability to lead and direct projects and teams with agile methodologies.'
+    },
+    {
+        title: 'AWS Certified Cloud Practitioner',
+        issuer: 'Amazon Web Services',
+        date: '2024',
+        description: 'Foundational understanding of AWS Cloud concepts, security, and services.'
+    },
+    {
+        title: 'Google UX Design Certificate',
+        issuer: 'Google',
+        date: '2024',
+        description: 'Completed rigorous training in the design process, from empathy to prototyping.'
+    },
+    {
+        title: 'Oracle Certified Associate, Java SE',
+        issuer: 'Oracle',
+        date: '2023',
+        description: 'Certification covering core Java programming language concepts and best practices.'
+    },
+    {
+        title: 'Scrum Master Certified (SMC)',
+        issuer: 'Scrum Alliance',
+        date: '2023',
+        description: 'Proficiency in Scrum methodology and Agile project management practices.'
+    }
+];
+
 // Render Skills Dashboard
 function renderSkills() {
     const skillsContainer = document.getElementById('skills-dashboard');
     
-    skillsData.forEach((skill, index) => {
-        const skillCard = document.createElement('div');
-        skillCard.className = 'skill-card animate-slideInLeft';
-        skillCard.style.animationDelay = `${index * 0.1}s`;
+    skillsData.forEach((category, index) => {
+        const categoryCard = document.createElement('div');
+        categoryCard.className = 'skill-card animate-slideInLeft';
+        categoryCard.style.animationDelay = `${index * 0.1}s`;
         
-        skillCard.innerHTML = `
-            <div class="skill-header">
-                <span class="skill-name">${skill.name}</span>
-                <span class="skill-percentage">${skill.level}%</span>
-            </div>
-            <div class="skill-bar">
-                <div class="skill-progress" style="width: 0; background-color: ${skill.color};"
-                     data-width="${skill.level}"></div>
-            </div>
-        `;
+        let skillsHTML = `<h3 class="skill-category-title">${category.title}</h3>`;
         
-        skillsContainer.appendChild(skillCard);
+        category.skills.forEach(skill => {
+            skillsHTML += `
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span class="skill-name">${skill.name}</span>
+                        <span class="skill-percentage">${skill.level}%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 0; background-color: #61dafb;"
+                             data-width="${skill.level}"></div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        categoryCard.innerHTML = skillsHTML;
+        skillsContainer.appendChild(categoryCard);
     });
 
     // Animate progress bars when visible
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const progressBar = entry.target.querySelector('.skill-progress');
-                const targetWidth = progressBar.getAttribute('data-width');
-                setTimeout(() => {
-                    progressBar.style.width = targetWidth + '%';
-                }, 100);
+                const progressBars = entry.target.querySelectorAll('.skill-progress');
+                progressBars.forEach(progressBar => {
+                    const targetWidth = progressBar.getAttribute('data-width');
+                    setTimeout(() => {
+                        progressBar.style.width = targetWidth + '%';
+                    }, 100);
+                });
                 observer.unobserve(entry.target);
             }
         });
@@ -224,6 +286,28 @@ function renderEducation() {
     });
 }
 
+// Render Certifications
+function renderCertifications() {
+    const container = document.getElementById('certifications-grid');
+    
+    certificationsData.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'education-card animate-fadeInUp';
+        card.style.animationDelay = `${index * 0.2}s`;
+        
+        card.innerHTML = `
+            <h3 class="project-title">${item.title}</h3>
+            <div class="experience-meta" style="margin-bottom: 1rem;">
+                <span class="experience-company">${item.issuer}</span>
+            </div>
+            <p class="project-description">${item.description}</p>
+            <span class="tech-tag">${item.date}</span>
+        `;
+        
+        container.appendChild(card);
+    });
+}
+
 // Initialize all content
 document.addEventListener('DOMContentLoaded', () => {
     renderSkills();
@@ -231,4 +315,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderExperience();
     renderVolunteering();
     renderEducation();
+    renderCertifications();
 });

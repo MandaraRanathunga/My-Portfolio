@@ -1,3 +1,22 @@
+// Theme configuration for canvas background
+let themeConfig = {
+    particleColor: 'rgba(44, 62, 80, OPACITY)',
+    lineColor: 'rgba(44, 62, 80, OPACITY_FACTOR)',
+    canvasClearColor: 'rgba(255, 255, 255, 0.3)'
+};
+
+function updateThemeConfig(isDark) {
+    if (isDark) {
+        themeConfig.particleColor = 'rgba(100, 200, 255, OPACITY)';
+        themeConfig.lineColor = 'rgba(100, 200, 255, OPACITY_FACTOR)';
+        themeConfig.canvasClearColor = 'rgba(10, 10, 30, 0.1)';
+    } else {
+        themeConfig.particleColor = 'rgba(44, 62, 80, OPACITY)'; // Darker particles for light mode
+        themeConfig.lineColor = 'rgba(44, 62, 80, OPACITY_FACTOR)';
+        themeConfig.canvasClearColor = 'rgba(255, 255, 255, 0.3)'; // Lighter clear for light mode
+    }
+}
+
 // Live Animated Background
 function initBackground() {
     const canvas = document.getElementById('bgCanvas');
@@ -17,8 +36,10 @@ function initBackground() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
             this.size = Math.random() * 2 + 1;
-            this.speedX = Math.random() * 0.5 - 0.25;
-            this.speedY = Math.random() * 0.5 - 0.25;
+            // Adjust speed for a calmer feel in light mode
+            const speedFactor = document.body.classList.contains('dark-mode') ? 0.5 : 0.3;
+            this.speedX = Math.random() * speedFactor - (speedFactor / 2);
+            this.speedY = Math.random() * speedFactor - (speedFactor / 2);
             this.opacity = Math.random() * 0.5 + 0.2;
         }
 
@@ -33,7 +54,7 @@ function initBackground() {
         }
 
         draw() {
-            ctx.fillStyle = `rgba(100, 200, 255, ${this.opacity})`;
+            ctx.fillStyle = themeConfig.particleColor.replace('OPACITY', this.opacity);
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
             ctx.fill();
@@ -52,7 +73,7 @@ function initBackground() {
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < 100) {
-                    ctx.strokeStyle = `rgba(100, 200, 255, ${0.2 * (1 - distance / 100)})`;
+                    ctx.strokeStyle = themeConfig.lineColor.replace('OPACITY_FACTOR', 0.2 * (1 - distance / 100));
                     ctx.lineWidth = 0.5;
                     ctx.beginPath();
                     ctx.moveTo(p1.x, p1.y);
@@ -64,7 +85,7 @@ function initBackground() {
     }
 
     function animate() {
-        ctx.fillStyle = 'rgba(10, 10, 30, 0.1)';
+        ctx.fillStyle = themeConfig.canvasClearColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         particles.forEach(particle => {
@@ -77,6 +98,14 @@ function initBackground() {
     }
 
     animate();
+
+    // Return a function to re-initialize particles on theme change
+    return function reinitParticles() {
+        particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+    };
 }
 
 // Smooth Scrolling & Active Navigation
@@ -223,12 +252,43 @@ function initContactForm() {
     });
 }
 
+// Theme Toggle
+function initThemeToggle(reinitParticles) {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Function to apply the theme
+    const applyTheme = (theme) => {
+        if (theme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        } else {
+            body.classList.remove('dark-mode');
+            themeToggle.textContent = '🌙';
+        }
+        updateThemeConfig(theme === 'dark');
+        if (reinitParticles) reinitParticles(); // Re-create particles with new speeds
+    };
+
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+
+    // Add click event listener
+    themeToggle.addEventListener('click', () => {
+        const isDark = body.classList.contains('dark-mode');
+        const newTheme = isDark ? 'light' : 'dark';
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+}
 
 // Update the initialization
 document.addEventListener('DOMContentLoaded', () => {
-    initBackground();
+    const reinitParticles = initBackground();
     initNavigation();
     initAnimations();
-    initCursor();           // NEW: Initialize custom cursor
-    initContactForm();      // NEW: Initialize contact form
+    initCursor();
+    initContactForm();
+    initThemeToggle(reinitParticles);
 });
