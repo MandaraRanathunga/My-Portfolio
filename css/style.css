@@ -189,7 +189,7 @@ main {
 
 .photo-wrapper {
     position: relative;
-    width: 380px;      /* increased from 320px */
+    width: 600px;      /* increased from 320px */
     height: 520px;     /* increased to show full body */
     background: transparent;
 }
@@ -197,7 +197,7 @@ main {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    object-position: center bottom;  /* anchors feet to bottom */
+    object-position: center bottom;
     border-radius: 0;
     border: none;
     background: transparent;
@@ -205,6 +205,10 @@ main {
     z-index: 2;
     transition: transform 0.3s ease;
     filter: drop-shadow(0 0 25px rgba(96, 165, 250, 0.5));
+
+    /* ADD THESE TWO LINES — fades bottom into background */
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
 }
 
 .profile-image:hover {
@@ -432,7 +436,7 @@ main {
 }
 
 .about-photo-container .photo-wrapper {
-    width: 340px;
+    width: 600px;
     height: 520px; /* Increased height to match paragraph length */
 }
 

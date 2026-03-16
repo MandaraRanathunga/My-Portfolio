@@ -72,7 +72,7 @@ const projectsData = [
         description: 'Designed a user-friendly fitness application featuring yoga, stretching, and abdominal workouts. Created a clean, responsive UI with GIF-based workout tutorials to enhance user engagement.',
         tech: ['Figma', 'UI/UX Design'],
         period: '2024',
-        link: 'https://www.figma.com'
+        link: 'https://www.figma.com/proto/PZIfogJYMDNmDihxRrB0Wz/UI-UX-ASSIGMENT?node-id=0-1&t=1TKOkVCLPvUHuCK0-1}'
     }
 ];
 
@@ -148,79 +148,79 @@ const educationData = [
     }
 ];
 
-// Certifications Data — from CV with real links
+// Certifications Data — real certificate links from CV
 const certificationsData = [
     {
         title: 'Capstone: Applying Project Management in the Real World',
         issuer: 'Google & Coursera',
         date: '2026',
-        link: 'https://www.coursera.org'
+        link: 'https://www.coursera.org/account/accomplishments/records/0U869N3QS56U'
     },
     {
         title: 'Agile Project Management',
         issuer: 'Google & Coursera',
         date: '2025',
-        link: 'https://www.coursera.org'
+        link: 'https://www.coursera.org/account/accomplishments/records/DDTR3PA67ZOE'
     },
     {
         title: 'Project Execution: Running the Project',
         issuer: 'Google & Coursera',
         date: '2025',
-        link: 'https://www.coursera.org'
+        link: 'https://www.coursera.org/account/accomplishments/records/7B1PK2P38TPW'
     },
     {
         title: 'Project Planning: Putting It All Together',
         issuer: 'Google & Coursera',
         date: '2025',
-        link: 'https://www.coursera.org'
+        link: 'https://www.coursera.org/account/accomplishments/records/H34EDLFWWZ7B'
     },
     {
         title: 'Project Initiation: Starting a Successful Project',
         issuer: 'Google & Coursera',
         date: '2025',
-        link: 'https://www.coursera.org'
+        link: 'https://www.coursera.org/account/accomplishments/verify/ESUHE1FSJH0L'
     },
     {
         title: 'Foundations of Project Management',
         issuer: 'Google & Coursera',
         date: '2025',
-        link: 'https://www.coursera.org'
+        link: 'https://www.coursera.org/account/accomplishments/records/0BHGI2NRD6S1'
     },
     {
         title: 'Front-End Development',
         issuer: 'Meta & Coursera',
         date: '2024',
-        link: 'https://www.coursera.org'
+        link: 'https://www.coursera.org/account/accomplishments/records/QFKWMC29DBZX'
     },
     {
         title: 'Python for Data Science, AI & Development',
         issuer: 'IBM & Coursera',
         date: '2024',
-        link: 'https://www.coursera.org'
+        link: 'https://www.coursera.org/account/accomplishments/records/WAQ95R5QZ2HX'
     },
     {
         title: 'Introduction to Artificial Intelligence',
         issuer: 'Great Learning',
         date: '2024',
-        link: 'https://www.mygreatlearning.com'
+        link: 'https://verify.mygreatlearning.com/verify/EWHKJOQM'
     },
     {
         title: 'Introduction to Machine Learning',
         issuer: 'Great Learning',
         date: '2024',
-        link: 'https://www.mygreatlearning.com'
+        link: 'https://verify.mygreatlearning.com/verify/MANHSKRA'
     },
     {
         title: 'Python',
         issuer: 'University of Moratuwa',
         date: '2024',
-        link: 'https://www.uom.lk'
+        link: null
     },
     {
         title: 'Introduction to Packet Tracer',
         issuer: 'Cisco Networking Academy',
         date: '2023',
-        link: 'https://www.netacad.com'
+        link: null
     }
 ];
 
@@ -380,23 +380,33 @@ function renderCertifications() {
         card.className = 'education-card animate-fadeInUp';
         card.style.animationDelay = `${index * 0.2}s`;
 
+        const certLinkHTML = item.link
+            ? `<a href="${item.link}" target="_blank"
+                  style="display: inline-flex; align-items: center; gap: 0.4rem;
+                         padding: 0.4rem 1rem; border-radius: 999px;
+                         background: rgba(96,165,250,0.15);
+                         border: 1px solid rgba(96,165,250,0.4);
+                         color: #60a5fa; font-size: 0.85rem;
+                         text-decoration: none; transition: all 0.3s;"
+                  onmouseover="this.style.background='rgba(96,165,250,0.3)'"
+                  onmouseout="this.style.background='rgba(96,165,250,0.15)'">
+                   🏅 View Certificate
+               </a>`
+            : `<span style="display: inline-flex; align-items: center; gap: 0.4rem;
+                            padding: 0.4rem 1rem; border-radius: 999px;
+                            background: rgba(156,163,175,0.1);
+                            border: 1px solid rgba(156,163,175,0.3);
+                            color: #9ca3af; font-size: 0.85rem;">
+                   🏅 Certificate Completed
+               </span>`;
+
         card.innerHTML = `
             <h3 class="project-title">${item.title}</h3>
             <div class="experience-meta" style="margin-bottom: 1rem;">
                 <span class="experience-company">${item.issuer}</span>
                 <span class="experience-period">${item.date}</span>
             </div>
-            <a href="${item.link}" target="_blank" 
-               style="display: inline-flex; align-items: center; gap: 0.4rem;
-                      padding: 0.4rem 1rem; border-radius: 999px;
-                      background: rgba(96,165,250,0.15);
-                      border: 1px solid rgba(96,165,250,0.4);
-                      color: #60a5fa; font-size: 0.85rem;
-                      text-decoration: none; transition: all 0.3s;"
-               onmouseover="this.style.background='rgba(96,165,250,0.3)'"
-               onmouseout="this.style.background='rgba(96,165,250,0.15)'">
-                🏅 View Certificate
-            </a>
+            ${certLinkHTML}
         `;
 
         container.appendChild(card);
