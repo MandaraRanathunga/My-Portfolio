@@ -220,7 +220,13 @@ const certificationsData = [
         title: 'Introduction to Packet Tracer',
         issuer: 'Cisco Networking Academy',
         date: '2023',
-        link: null
+        link: 'https://drive.google.com/file/d/13KFiTWXI9AoFasn19OQATD5c6hrBH36I/view'
+    },
+    {
+        title: 'Introduction to Networks',
+        issuer: 'Cisco Networking Academy',
+        date: '2023',
+        link: 'https://drive.google.com/file/d/1eXqPdx5BxChNwjq8E9Hit5RyFJV5ch2E/view'
     }
 ];
 

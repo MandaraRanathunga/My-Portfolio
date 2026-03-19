@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
 </head>
+
 <body>
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>
@@ -72,15 +73,15 @@
 <div class="hero-buttons">
     <div class="cv-row">
         <div class="cv-group">
-            <span class="cv-label">📊 PM & Business Analytics</span>
+            <span class="cv-label">📊 Project Management & Business Analytics</span>
             <div class="cv-actions">
-                <a href="assests/cv/R_M_M_Ranathunga_PM_and_BA CV.pdf" target="_blank" class="btn-cv-view">👁️ View</a>
+                <a href="assests/cv/R_M_M_Ranathunga_PM_and_BA.pdf" target="_blank" class="btn-cv-view">👁️ View</a>
             </div>
         </div>
         <div class="cv-group">
             <span class="cv-label">💻 Software Development</span>
             <div class="cv-actions">
-                <a href="assests/cv/R_M_M_Ranathunga_SE CV.pdf" target="_blank" class="btn-cv-view">👁️ View</a>
+                <a href="assests/cv/R_M_M_Ranathunga_SE.pdf" target="_blank" class="btn-cv-view">👁️ View</a>
             </div>
         </div>
     </div>
@@ -260,8 +261,43 @@
                             </div>
                         </div>
                     </div>
-            
+
+                    <!-- ✅ NEW ANIMATED PANEL — replaces the empty closing divs -->
+                    <div class="contact-visual-panel">
+                        <div class="orbit-ring"></div>
+                        <div class="orbit-ring"></div>
+
+                        <div class="contact-center-icon">✉️</div>
+
+                        <div class="contact-slide-wrapper">
+                            <div class="contact-slide-text" id="contact-slide">Get In Touch With Me ✨</div>
+                        </div>
+
+                        <div class="contact-chips">
+                            <a href="mailto:mandararanatunga123@gmail.com" class="contact-chip" id="chip-0">
+                                <div class="contact-chip-icon">📧</div>
+                                <div>
+                                    <div class="contact-chip-label">Email Me At</div>
+                                    <div class="contact-chip-value">mandararanatunga123@gmail.com</div>
+                                </div>
+                            </a>
+                            <a href="https://www.linkedin.com/in/mandara-ranathunga-b3282227b/" target="_blank" class="contact-chip" id="chip-1">
+                                <div class="contact-chip-icon">💼</div>
+                                <div>
+                                    <div class="contact-chip-label">Connect On</div>
+                                    <div class="contact-chip-value">LinkedIn</div>
+                                </div>
+                            </a>
+                            <a href="https://github.com/account" target="_blank" class="contact-chip" id="chip-2">
+                                <div class="contact-chip-icon">🐙</div>
+                                <div>
+                                    <div class="contact-chip-label">Find Me On</div>
+                                    <div class="contact-chip-value">GitHub</div>
+                                </div>
+                            </a>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -294,8 +330,8 @@
     <a href="#" id="back-to-top" class="back-to-top">
         ↑
     </a>
-
-    <script src="js/main.js"></script>
-    <script src="js/skills-dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/skills-dashboard.js"></script>
 </body>
 </html>

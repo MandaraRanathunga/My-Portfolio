@@ -198,60 +198,49 @@ function initCursor() {
 
 // Handle Contact Form Submission
 function initContactForm() {
+    const EMAILJS_PUBLIC_KEY = '-KK9BjA_STLl10mEu';
+    const EMAILJS_SERVICE_ID  = 'service_6533pj9';
+    const EMAILJS_TEMPLATE_ID = 'template_sm3ue3l';
+
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+
     const form = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
-    
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        // Get form data
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            subject: document.getElementById('subject').value,
-            message: document.getElementById('message').value
-        };
-        
-        // Disable submit button
+
         const submitBtn = form.querySelector('.btn-submit');
         submitBtn.disabled = true;
         submitBtn.textContent = 'Sending...';
-        
-        // Simulate form submission (replace with your actual backend endpoint)
+
+        const templateParams = {
+            from_name:  document.getElementById('name').value,
+            from_email: document.getElementById('email').value,
+            subject:    document.getElementById('subject').value,
+            message:    document.getElementById('message').value
+        };
+
         try {
-            // This is where you'd normally send to your backend
-            // Example: await fetch('your-backend-url', { method: 'POST', body: JSON.stringify(formData) })
-            
-            // Simulate delay
-            await new Promise(resolve => setTimeout(resolve, 1500));
-            
-            // Show success message
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+
             formStatus.className = 'form-status success';
-            formStatus.textContent = '✓ Message sent successfully! I\'ll get back to you soon.';
-            
-            // Reset form
+            formStatus.textContent = '✓ Message sent! I\'ll get back to you soon.';
             form.reset();
-            
-            // Log to console (for demonstration)
-            console.log('Form submitted:', formData);
-            
+
         } catch (error) {
-            // Show error message
+            console.error('EmailJS error:', error);
             formStatus.className = 'form-status error';
-            formStatus.textContent = '✗ Oops! Something went wrong. Please try again.';
+            formStatus.textContent = '✗ Something went wrong. Please email me directly.';
         } finally {
-            // Re-enable submit button
             submitBtn.disabled = false;
             submitBtn.textContent = 'Send Message';
-            
-            // Hide status message after 5 seconds
             setTimeout(() => {
                 formStatus.style.display = 'none';
             }, 5000);
         }
     });
 }
-
 // Theme Toggle
 function initThemeToggle(reinitParticles) {
     const themeToggle = document.getElementById('theme-toggle');
@@ -284,6 +273,49 @@ function initThemeToggle(reinitParticles) {
 }
 
 // Update the initialization
+// Contact Panel Animation
+function initContactPanel() {
+    const slides = [
+        "Get In Touch With Me ✨",
+        "Let's Build Something Together 🚀",
+        "Open To New Opportunities 💡",
+        "mandararanatunga123@gmail.com 📧",
+        "Always Happy To Collaborate 🤝",
+        "Drop Me A Message Below ⬇️"
+    ];
+
+    let current = 0;
+    const el = document.getElementById('contact-slide');
+    if (!el) return;
+
+    function nextSlide() {
+        el.classList.add('out');
+        setTimeout(() => {
+            current = (current + 1) % slides.length;
+            el.textContent = slides[current];
+            el.classList.remove('out');
+        }, 420);
+    }
+
+    setInterval(nextSlide, 3000);
+
+    // Stagger chip slide-in on scroll into view
+    const chips = document.querySelectorAll('.contact-chip');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                chips.forEach((chip, i) => {
+                    setTimeout(() => chip.classList.add('visible'), i * 150 + 200);
+                });
+                observer.disconnect();
+            }
+        });
+    }, { threshold: 0.2 });
+
+    const panel = document.querySelector('.contact-visual-panel');
+    if (panel) observer.observe(panel);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const reinitParticles = initBackground();
     initNavigation();
@@ -291,4 +323,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initCursor();
     initContactForm();
     initThemeToggle(reinitParticles);
-});
+    initContactPanel();
+});F
