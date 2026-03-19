@@ -1143,9 +1143,10 @@ main {
     }
 
     /* Inside @media (max-width: 968px) — find the existing rule and update: */
-.contact-photo-container,
 .contact-visual-panel {
-    display: none;
+    display: flex;
+    width: 100%;
+    min-height: 350px;
 }
 }
 
@@ -1380,8 +1381,10 @@ main {
         gap: 1.5rem;
     }
 
-    .contact-photo-container {
-        display: none;
+    .contact-visual-panel {
+        display: flex;
+        width: 100%;
+        min-height: 350px;
     }
 
     .contact-card {
